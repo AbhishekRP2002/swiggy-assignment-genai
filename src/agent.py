@@ -15,7 +15,7 @@ class AssistantResponse(BaseModel):
     intent_category: Literal["dining", "travel", "gifting", "cab booking", "other"] = (
         Field(description="The category of the user's intent")
     )
-    entities: Dict[str, Any] = Field(
+    entities: Optional[Dict[str, Any]] = Field(
         description="Key entities extracted from the user request (date, time, location, cuisine, party_size, budget, etc.)",
     )
     confidence_score: float = Field(
@@ -63,9 +63,12 @@ class PersonalAssistant:
         pprint(response)
         result = response.get("parsed", response.get("raw", {}).tool_calls[0]["args"])
         # handle non-standard intent categories
-        if result["intent_category"] == "other":
-            web_results = self._perform_web_search(user_input)
-            result["web_search_results"] = web_results
+        if isinstance(result, AssistantResponse):
+            result = result.model_dump()
+        if isinstance(result, dict):
+            if result["intent_category"] == "other":
+                web_search_results = self._perform_web_search(user_input)
+                result["web_search_results"] = web_search_results
 
         return result
 
@@ -102,6 +105,6 @@ class PersonalAssistant:
 if __name__ == "__main__":
     # Example usage
     assistant = PersonalAssistant()
-    user_query = "Need a sunset-view table for two tonight; gluten-free menu a must"
+    user_query = "travel in europe with 2 people and fine dining"
     response = assistant.process_query(user_query)
     print(json.dumps(response, indent=2, ensure_ascii=False))
