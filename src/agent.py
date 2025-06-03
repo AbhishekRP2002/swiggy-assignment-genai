@@ -6,7 +6,7 @@ from duckduckgo_search import DDGS
 import os
 import json  # noqa
 from rich.pretty import pprint
-from prompts import SYSTEM_PROMPT
+from src.prompts import SYSTEM_PROMPT
 
 
 class AssistantResponse(BaseModel):
@@ -97,3 +97,11 @@ class PersonalAssistant:
                     "snippet": "Unable to perform web search.",
                 }
             ]
+
+
+if __name__ == "__main__":
+    # Example usage
+    assistant = PersonalAssistant()
+    user_query = "Need a sunset-view table for two tonight; gluten-free menu a must"
+    response = assistant.process_query(user_query)
+    print(json.dumps(response, indent=2, ensure_ascii=False))
