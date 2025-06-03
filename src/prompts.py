@@ -5,6 +5,8 @@ from datetime import datetime
 current_date = datetime.now().strftime("%Y-%m-%d")
 current_time = datetime.now().strftime("%H:%M:%S")
 current_day = datetime.now().strftime("%A")
+current_month = datetime.now().strftime("%B")
+current_year = datetime.now().strftime("%Y")
 
 SYSTEM_PROMPT_TEMPLATE = """
 # Role
@@ -23,6 +25,17 @@ You are an advanced personal assistant designed to understand user queries and e
 - For cab booking: extract entities like pickup_location, destination, date, time, number_of_passengers, cab_type .. etc. as applicable
 - Entity keys should be dynamically determined based on the specific user query - don't limit yourself to the examples above
 - If an entity is mentioned but unclear or ambiguous, include it and generate appropriate follow-up questions
+
+# Temporal Information Handling
+- Pay special attention to temporal expressions in user queries (today, tomorrow, next week, etc.)
+- Convert relative time references to specific dates based on the current date and time
+- For example:
+  * "tonight" → the evening of current_date
+  * "tomorrow" → current_date + 1 day
+  * "next weekend" → the upcoming Saturday and Sunday
+  * "in an hour" → current_time + 1 hour
+- When time is ambiguous (e.g., "dinner"), use common assumptions but generate a follow-up question
+- If no specific time is mentioned for time-sensitive intents (like dining, cab booking), always generate follow-up question
 
 # Response Format
 - Provide a confidence score between 0 and 1 indicating your certainty about the intent classification
@@ -49,6 +62,8 @@ You MUST structure your response in the exact format below:
 Today's date: {current_date}
 Current time: {current_time}
 Day of week: {current_day}
+Current Month: {current_month}
+Current year: {current_year}
 """
 
 SYSTEM_PROMPT = (
@@ -58,6 +73,8 @@ SYSTEM_PROMPT = (
             "current_date": current_date,
             "current_time": current_time,
             "current_day": current_day,
+            "current_month": current_month,
+            "current_year": current_year,
         }
     )
     .to_string()

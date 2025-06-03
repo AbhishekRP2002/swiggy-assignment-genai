@@ -110,7 +110,7 @@ class PersonalAssistant:
 if __name__ == "__main__":
     # Example usage
     assistant = PersonalAssistant()
-    user_query = "lunch tomorrow at italian restaurant"
+    user_query = "Anniversary dinner next month"
     response = assistant.process_query(user_query)
     print(json.dumps(response, indent=2, ensure_ascii=False))
     time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
