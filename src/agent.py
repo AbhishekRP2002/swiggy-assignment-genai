@@ -7,6 +7,9 @@ import os
 import json  # noqa
 from rich.pretty import pprint
 from src.prompts import SYSTEM_PROMPT
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class AssistantResponse(BaseModel):
@@ -105,6 +108,6 @@ class PersonalAssistant:
 if __name__ == "__main__":
     # Example usage
     assistant = PersonalAssistant()
-    user_query = "travel in europe with 2 people and fine dining"
+    user_query = "I need a gift for my mom's birthday under $100"
     response = assistant.process_query(user_query)
     print(json.dumps(response, indent=2, ensure_ascii=False))

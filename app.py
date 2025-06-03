@@ -1,51 +1,183 @@
-import chainlit as cl
+import streamlit as st
 from src.agent import PersonalAssistant
-from src.utils import format_json_response
-import os  # noqa
+import time
+import os
 
-agent = PersonalAssistant()
+st.set_page_config(
+    page_title="Swiggy Personal Assistant", page_icon="🎯", layout="wide"
+)
+
+st.markdown(
+    """
+<style>
+    .main {
+        padding: 2rem;
+    }
+    .output-container {
+        background-color: #f0f2f6;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin-top: 1rem;
+    }
+    .intent-badge {
+        background-color: #4CAF50;
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 1rem;
+        font-size: 0.8rem;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+    .entity-item {
+        background-color: #e1e5eb;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+    .follow-up {
+        background-color: #e8f4f8;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+    .search-result {
+        border-left: 3px solid #4CAF50;
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+    }
+    .example-card {
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+    }
+</style>
+""",
+    unsafe_allow_html=True,
+)
+
+st.title("🎯 Personal Assistant")
+st.markdown("""
+This personal assistant analyzes user queries and:
+1. Categorizes them into intent categories (dining, travel, gifting, cab booking, or other)
+2. Extracts relevant entities from the query
+3. Provides follow-up questions for missing information
+4. Performs web searches for non-standard queries
+""")
+
+api_key = st.text_input(
+    "OpenAI API Key", type="password", help="Enter your OpenAI API key"
+)
+st.caption("Your API key is not stored and is only used for this session.")
+
+if "selected_example" not in st.session_state:
+    st.session_state.selected_example = ""
+
+st.subheader("Example Queries")
+example_queries = [
+    "I need a table for two tonight at a restaurant with a sunset-view",
+    "Book me a flight to Paris next month for a week",
+    "I need a gift for my mom's birthday under $100",
+    "Get me a cab from the airport to downtown tomorrow morning",
+    "What's the latest news about artificial intelligence?",
+]
+
+for i, example in enumerate(example_queries):
+    if st.button(f"Example {i+1}: {example}", key=f"example_{i}"):
+        st.session_state.selected_example = example
+
+user_query = st.text_input(
+    "Enter your query",
+    value=st.session_state.selected_example,
+    placeholder="E.g., I need a table for two tonight for my anniversary.",
+)
+
+if not api_key:
+    api_key = os.environ.get("OPENAI_API_KEY")
 
 
-@cl.on_chat_start
-async def on_chat_start():
-    """Initialize the chat session."""
-    await cl.Message(
-        content="👋 Hello! I'm your personal assistant. I can understand fuzzy requests like 'Need a sunset-view table for two tonight; gluten-free menu a must' and convert them into structured information.",
-    ).send()
+if st.button("Generate Response") and user_query and api_key:
+    with st.spinner("Analyzing your query..."):
+        try:
+            assistant = PersonalAssistant(api_key=api_key)
+            start_time = time.time()
+            response = assistant.process_query(user_query)
+            processing_time = time.time() - start_time
 
+            st.success(f"Analysis completed in {processing_time:.2f} seconds")
+            tab1, tab2 = st.tabs(["Formatted View", "JSON View"])
 
-@cl.on_message
-async def on_message(message: cl.Message):
-    """Process incoming messages."""
-    user_input = message.content
+            with tab1:
+                # intent category
+                intent = response.get("intent_category", "unknown")
+                intent_color = {
+                    "dining": "#4CAF50",
+                    "travel": "#2196F3",
+                    "gifting": "#FF9800",
+                    "cab booking": "#9C27B0",
+                    "other": "#607D8B",
+                }.get(intent, "#607D8B")
 
-    with cl.Step("Processing your request...") as step:
-        response = agent.process_query(user_input)
+                st.markdown(
+                    f"""
+                <div style="margin-bottom: 1rem;">
+                    <span style="background-color: {intent_color}; color: white; padding: 0.3rem 0.6rem; border-radius: 1rem; font-size: 0.8rem;">
+                        {intent.upper()}
+                    </span>
+                    <span style="margin-left: 1rem; color: #666;">
+                        Confidence: {response.get("confidence_score", 0):.2f}
+                    </span>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
 
-        formatted_response = format_json_response(response)
+                # Display entities
+                if response.get("entities"):
+                    st.markdown("##### Extracted Entities")
+                    for key, value in response.get("entities", {}).items():
+                        st.markdown(
+                            f"""
+                        <div class="entity-item">
+                            <strong>{key}:</strong> {value}
+                        </div>
+                        """,
+                            unsafe_allow_html=True,
+                        )
+                else:
+                    st.info("No entities were extracted from this query.")
 
-        response_message = f"```json\n{formatted_response}\n```"
+                # show follow-up questions
+                if response.get("follow_up_questions"):
+                    st.markdown("##### Suggested Follow-up Questions")
+                    for question in response.get("follow_up_questions", []):
+                        st.markdown(
+                            f"""
+                        <div class="follow-up">
+                            {question}
+                        </div>
+                        """,
+                            unsafe_allow_html=True,
+                        )
 
-        if (
-            response.get("follow_up_questions")
-            and len(response["follow_up_questions"]) > 0
-        ):
-            response_message += "\n\n**Follow-up questions:**\n"
-            for i, question in enumerate(response["follow_up_questions"], 1):
-                response_message += f"{i}. {question}\n"
+                # show web search results if available
+                if response.get("Web Search_results"):
+                    st.markdown("##### Web Search Results")
+                    for result in response.get("Web Search_results", []):
+                        st.markdown(
+                            f"""
+                        <div class="search-result">
+                            <a href="{result.get('link', '#')}" target="_blank"><strong>{result.get('title', 'No title')}</strong></a>
+                            <p>{result.get('snippet', 'No snippet available')}</p>
+                        </div>
+                        """,
+                            unsafe_allow_html=True,
+                        )
 
-        if (
-            response.get("web_search_results")
-            and len(response["web_search_results"]) > 0
-        ):
-            response_message += "\n\n**Web search results:**\n"
-            for i, result in enumerate(response["web_search_results"], 1):
-                response_message += f"{i}. [{result['title']}]({result['link']})\n   {result['snippet']}\n\n"
+            with tab2:
+                # Display raw JSON
+                st.json(response)
 
-        step.output = response_message
-
-    await cl.Message(content=response_message).send()
-
-
-if __name__ == "__main__":
-    pass
+        except Exception as e:
+            st.error(f"Error processing your request: {str(e)}")
