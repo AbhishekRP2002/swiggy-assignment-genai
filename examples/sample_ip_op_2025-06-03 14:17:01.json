@@ -1,0 +1,36 @@
+{
+  "input": "Latest research on intermittent fasting benefits and recommended schedules",
+  "output": {
+    "intent_category": "other",
+    "entities": null,
+    "confidence_score": 0.95,
+    "follow_up_questions": [],
+    "web_search_results": [
+      {
+        "title": "Research on intermittent fasting shows health benefits",
+        "link": "https://www.nia.nih.gov/news/research-intermittent-fasting-shows-health-benefits",
+        "snippet": "Evidence from decades of animal and human research points to wide-ranging health benefits of intermittent fasting, according to an NIA-conducted review of the research, published in the New England Journal of Medicine.Still, more research is needed to determine whether intermittent fasting yields benefits or is even feasible for humans when practiced over the long term, such as for years."
+      },
+      {
+        "title": "8-hour time-restricted eating linked to a 91% higher risk of ...",
+        "link": "https://newsroom.heart.org/news/8-hour-time-restricted-eating-linked-to-a-91-higher-risk-of-cardiovascular-death",
+        "snippet": "Time-restricted eating, a type of intermittent fasting, involves limiting the hours for eating to a specific number of hours each day, which may range from a 4- to 12-hour time window in 24 hours. Many people who follow a time-restricted eating diet follow a 16:8 eating schedule, where they eat all their foods in an 8-hour window and fast for ..."
+      },
+      {
+        "title": "Intermittent Fasting: Current Evidence in Clinical Practice",
+        "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7338490/",
+        "snippet": "Intermittent fasting (IF), or time-restricted feeding, is an emerging dietary intervention that restricts intake of food and energy for a given period. ... The idea that reducing caloric intake can result in evolutionary cellular responses for survival has been an active research topic,3 but with the recent public awareness and interest in IF ..."
+      },
+      {
+        "title": "Intermittent fasting and health outcomes: an umbrella review of ...",
+        "link": "https://www.thelancet.com/journals/eclinm/article/PIIS2589-5370(24)00098-1/fulltext",
+        "snippet": "Intermittent fasting (IF), an eating pattern characterized by alternating periods of eating and fasting, has attracted significant attention in recent years due to its potential health benefits and lifespan extension. 1 IF encompasses various categories. The first category is zero-calorie alternate-day fasting (ADF) or modified alternate-day ..."
+      },
+      {
+        "title": "Intermittent fasting is effective for weight loss and improves ...",
+        "link": "https://www.sciencedaily.com/releases/2025/01/250108144146.htm",
+        "snippet": "Scientists have conducted a pioneering study on the benefits of intermittent fasting. Not eating anything from 5 p.m. until 9 a.m. the following day (early fasting) helps to a greater extent to ..."
+      }
+    ]
+  }
+}

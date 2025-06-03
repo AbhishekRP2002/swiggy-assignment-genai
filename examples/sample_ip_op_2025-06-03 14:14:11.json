@@ -1,0 +1,18 @@
+{
+  "input": "Need a sunset-view table for two tonight; gluten-free menu a must",
+  "output": {
+    "intent_category": "dining",
+    "entities": {
+      "party_size": 2,
+      "date": "tonight",
+      "special_request": "sunset-view table",
+      "dietary_restrictions": "gluten-free"
+    },
+    "confidence_score": 0.95,
+    "follow_up_questions": [
+      "What time would you like the reservation?",
+      "What is your preferred location or restaurant?"
+    ],
+    "web_search_results": null
+  }
+}

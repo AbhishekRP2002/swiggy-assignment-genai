@@ -1,0 +1,18 @@
+{
+  "input": "Need transportation to a good steakhouse tonight, returning around midnight",
+  "output": {
+    "intent_category": "cab booking",
+    "entities": {
+      "destination": "steakhouse",
+      "return_time": "midnight",
+      "departure_time": "tonight"
+    },
+    "confidence_score": 0.9,
+    "follow_up_questions": [
+      "What is your pickup location?",
+      "How many passengers will be traveling?",
+      "Do you have a specific steakhouse in mind?"
+    ],
+    "web_search_results": null
+  }
+}

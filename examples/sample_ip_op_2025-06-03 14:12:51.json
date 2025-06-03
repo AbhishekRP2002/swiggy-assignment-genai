@@ -1,0 +1,17 @@
+{
+  "input": "I need a gift for my mom's birthday under $100",
+  "output": {
+    "intent_category": "gifting",
+    "entities": {
+      "recipient": "mom",
+      "occasion": "birthday",
+      "budget": "under $100"
+    },
+    "confidence_score": 0.95,
+    "follow_up_questions": [
+      "What type of gift are you considering?",
+      "Do you have any specific preferences or interests of your mom in mind?"
+    ],
+    "web_search_results": null
+  }
+}

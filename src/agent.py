@@ -8,6 +8,8 @@ import json  # noqa
 from rich.pretty import pprint
 from src.prompts import SYSTEM_PROMPT
 from dotenv import load_dotenv
+from src.utils import format_json_response, save_example  # noqa
+from datetime import datetime
 
 load_dotenv()
 
@@ -108,6 +110,12 @@ class PersonalAssistant:
 if __name__ == "__main__":
     # Example usage
     assistant = PersonalAssistant()
-    user_query = "I need a gift for my mom's birthday under $100"
+    user_query = "Something for tech-savvy dad, retirement present"
     response = assistant.process_query(user_query)
     print(json.dumps(response, indent=2, ensure_ascii=False))
+    time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    save_example(
+        user_query,
+        response,
+        f"sample_ip_op_{time}.json",
+    )

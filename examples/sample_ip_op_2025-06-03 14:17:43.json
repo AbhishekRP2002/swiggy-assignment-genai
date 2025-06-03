@@ -1,0 +1,36 @@
+{
+  "input": "ipl final match house party",
+  "output": {
+    "intent_category": "other",
+    "entities": null,
+    "confidence_score": 0.7,
+    "follow_up_questions": [],
+    "web_search_results": [
+      {
+        "title": "Your Ultimate IPL House Party Guide | HomeLane Blog",
+        "link": "https://www.homelane.com/design-ideas/your-ultimate-ipl-house-party-guide/",
+        "snippet": "A view of a match should be arranged particularly on big screens with a good sound system. A projector with an ultimate acoustic system adds to the joy of watching an IPL match. Ensure to keep your party complete in terms of refreshments. Make sure that your party is equipped with sufficient popcorns, cold drinks, and some delicious snacks."
+      },
+      {
+        "title": "IPL & UEFA Final 2025 Watch Party Guide | BlackCarrot",
+        "link": "https://www.blackcarrot.in/blogs/news/blogs-news-ipl-uefa-final-watch-party-dinnerware-guide",
+        "snippet": "🏆 IPL 2025 Final: All You Need to Know. Date: Tuesday, June 3, 2025. Time: 7:30 PM IST. Venue: Narendra Modi Stadium, Ahmedabad. Broadcast: Star Sports Network. Streaming: JioCinema app and website. The IPL 2025 final promises a thrilling conclusion to the season, with top teams battling it out for the coveted trophy."
+      },
+      {
+        "title": "IPL Final Watch Party? Spicy Chill with the refrigerator",
+        "link": "https://shop.haierindia.com/blog/ipl-final-match-watch-party-refrigerator/",
+        "snippet": "Set your fridge on party mode by evening; And if your current fridge feels like a black hole every time you open it,maybe it's time to upgrade. Explore Now and Host Like a Pro. Make your IPL final night cooler in every sense. Shop the Haier Lumiere 630L 4-Door Convertible Refrigerator today. Let the game be spicy. Let your drinks stay ice cold."
+      },
+      {
+        "title": "The Ultimate IPL Watch Party Setup With Portronics",
+        "link": "https://www.portronics.com/blogs/post/the-ultimate-ipl-watch-party-setup-with-portronics",
+        "snippet": "Level up your IPL watch party step up with Portronics! Learn more about top gadgets like Bluetooth speakers, projectors & more to make every match unforgettable."
+      },
+      {
+        "title": "Hosting A House Party To Watch The IPL Knockouts? 7 Easy ... - Slurrp",
+        "link": "https://www.slurrp.com/article/hosting-a-house-party-to-watch-the-ipl-knockouts-7-easy-snacks-to-make-at-home-1716209810285",
+        "snippet": "The IPL Knockouts are at the crucial stage of the tournament where the top teams compete in high-stakes matches to secure a spot in the final. These knockout matches include the Qualifier 1, Eliminator, Qualifier 2, and the Final."
+      }
+    ]
+  }
+}

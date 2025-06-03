@@ -1,0 +1,18 @@
+{
+  "input": "Something for tech-savvy dad, retirement present",
+  "output": {
+    "intent_category": "gifting",
+    "entities": {
+      "recipient": "dad",
+      "occasion": "retirement",
+      "preferences": "tech-savvy"
+    },
+    "confidence_score": 0.95,
+    "follow_up_questions": [
+      "What is your budget for the gift?",
+      "Do you have any specific tech categories in mind (e.g., gadgets, smart home devices, etc.)?",
+      "When do you need the gift by?"
+    ],
+    "web_search_results": null
+  }
+}
