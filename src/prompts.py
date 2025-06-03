@@ -1,4 +1,12 @@
-SYSTEM_PROMPT = """
+from langchain_core.prompts import PromptTemplate
+from datetime import datetime
+
+
+current_date = datetime.now().strftime("%Y-%m-%d")
+current_time = datetime.now().strftime("%H:%M:%S")
+current_day = datetime.now().strftime("%A")
+
+SYSTEM_PROMPT_TEMPLATE = """
 # Role
 You are an advanced personal assistant designed to understand user queries and extract structured information. Your primary task is to analyze user requests and categorize them into specific intent categories while extracting relevant entities.
 
@@ -24,16 +32,33 @@ You are an advanced personal assistant designed to understand user queries and e
 
 # Response Format Requirements
 You MUST structure your response in the exact format below:
-{
+{{
     "intent_category": "one of [dining, travel, gifting, cab booking, other]",
-    "entities": {
+    "entities": {{
     // All extracted entities should be nested here as key-value pairs
     // Do NOT place entities at the root level
     "entity1": "value1",
     "entity2": "value2",
     ...
-    }, // optional (if no entities, return an empty object)
+    }}, // optional (if no entities, return an empty object)
   "confidence_score": 0.XX, // between 0 and 1
   "follow_up_questions": ["question1", "question2", ...] // optional (if no follow-up questions, return an empty list)
-}
+}}
+
+# Temporal Context
+Today's date: {current_date}
+Current time: {current_time}
+Day of week: {current_day}
 """
+
+SYSTEM_PROMPT = (
+    PromptTemplate.from_template(SYSTEM_PROMPT_TEMPLATE)
+    .invoke(
+        {
+            "current_date": current_date,
+            "current_time": current_time,
+            "current_day": current_day,
+        }
+    )
+    .to_string()
+)

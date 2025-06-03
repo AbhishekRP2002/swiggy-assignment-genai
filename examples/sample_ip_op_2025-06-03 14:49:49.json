@@ -1,0 +1,18 @@
+{
+  "input": "lunch tomorrow at italian restaurant",
+  "output": {
+    "intent_category": "dining",
+    "entities": {
+      "meal": "lunch",
+      "date": "2025-06-04",
+      "cuisine": "Italian"
+    },
+    "confidence_score": 0.95,
+    "follow_up_questions": [
+      "What time would you like to have lunch?",
+      "How many people will be dining?",
+      "Do you have a preferred location or restaurant name?"
+    ],
+    "web_search_results": null
+  }
+}

@@ -39,13 +39,5 @@ async def process_query(request: QueryRequest) -> Dict[str, Any]:
         raise HTTPException(status_code=500, detail=f"Error processing query: {str(e)}")
 
 
-@app.get("/health")
-async def health_check():
-    """
-    Health check endpoint
-    """
-    return {"status": "healthy"}
-
-
 if __name__ == "__main__":
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)

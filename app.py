@@ -1,3 +1,7 @@
+"""
+source code for streamlit interface for the Personal Assistant agent
+"""
+
 import streamlit as st
 from src.agent import PersonalAssistant
 import time
