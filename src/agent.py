@@ -50,7 +50,7 @@ class PersonalAssistant:
     def __init__(self, api_key: Optional[str] = None):
         """Initialize the agent with OpenAI API key."""
         self.api_key = api_key or os.environ.get("OPENAI_API_KEY")
-        self.llm = ChatOpenAI(model="gpt-4o", temperature=0.1, api_key=self.api_key)
+        self.llm = ChatOpenAI(model="gpt-4o", temperature=0.1, api_key=self.api_key) # type: ignore
         self.structured_llm = self.llm.with_structured_output(
             AssistantResponse, include_raw=True, method="function_calling"
         )
